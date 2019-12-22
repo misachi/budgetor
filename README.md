@@ -1,2 +1,2 @@
 # budgetor
-Budget is light budget tracking application
+Budgetor is light budget tracking application
