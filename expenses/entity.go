@@ -30,17 +30,9 @@ func (E *Expense) BeforeCreate() (err error) {
 	return
 }
 
-func (u *Expense) DBMigrate(db *gorm.DB) {
-	db.AutoMigrate(&Expense{})
-}
-
 type ExpenseLine struct {
 	gorm.Model
 	Item        string  `gorm:"type:varchar(20)"`
 	Description *string `gorm:type:text`
 	Amount      float64
-}
-
-func (u *ExpenseLine) DBMigrate(db *gorm.DB) {
-	db.AutoMigrate(&ExpenseLine{})
 }

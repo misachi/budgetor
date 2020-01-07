@@ -35,15 +35,7 @@ func (P *BudgetPeriod) BeforeCreate() (err error) {
 	return
 }
 
-func (u *BudgetPeriod) DBMigrate(db *gorm.DB) {
-	db.AutoMigrate(&BudgetPeriod{})
-}
-
 type Budget struct {
 	gorm.Model
 	Amount float64
-}
-
-func (u *Budget) DBMigrate(db *gorm.DB) {
-	db.AutoMigrate(&Budget{})
 }

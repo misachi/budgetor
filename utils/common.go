@@ -23,10 +23,6 @@ func initializeDb() *gorm.DB {
 	return db
 }
 
-type Entity interface {
-	DBMigrate(db *gorm.DB)
-}
-
 type ErrorResponse struct {
 	Error string
 }

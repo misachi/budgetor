@@ -16,7 +16,3 @@ type User struct {
 	Phone         string            `gorm:"type:varchar(15)" json:"phone"`
 	BudgetPeriods []bg.BudgetPeriod `gorm:"foreignkey:FK"`
 }
-
-func (u *User) DBMigrate(db *gorm.DB) {
-	db.AutoMigrate(&User{})
-}

@@ -14,7 +14,7 @@ import (
 )
 
 // Container for all project apps
-var app = []utils.Entity{
+var app = []interface{}{
 	&users.User{},
 	&expenses.Expense{},
 	&expenses.ExpenseLine{},
@@ -25,11 +25,13 @@ var app = []utils.Entity{
 // Make migrations for all project apps
 func migrate(db *gorm.DB) {
 	for _, elem := range app {
-		elem.DBMigrate(db)
+		db.AutoMigrate(elem)
 	}
 }
 
 func main() {
-	migrate(utils.Conn)
-	log.Fatal(http.ListenAndServe(":8080", api.Handlers()))
+	db := utils.Conn
+	defer db.Close()
+	migrate(db)
+	log.Fatal(http.ListenAndServe(":8080", api.Handlers(db)))
 }

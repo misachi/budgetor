@@ -8,7 +8,7 @@ const (
 	Shopping      = "Shopping"
 	Transport     = "Transport"
 	Family        = "Family"
-	Utils         = "Utils" // house utilities(electricity, internet, water etc)
+	Utility       = "Utility" // house utilities(electricity, internet, water etc)
 	Rent          = "Rent"
 
 	Daily   = "Daily"
@@ -17,5 +17,5 @@ const (
 	Yearly  = "Yearly"
 )
 
-var Category = [7]string{Food, Entertainment, Airtime, Shopping, Transport, Family, Utils}
+var Category = [7]string{Food, Entertainment, Airtime, Shopping, Transport, Family, Utility}
 var Period = [4]string{Daily, Weekly, Monthly, Yearly}
