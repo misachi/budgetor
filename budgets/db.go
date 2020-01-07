@@ -20,6 +20,10 @@ func NewBudgetPeriodRepo(c *gorm.DB) *BudgetPeriodRepository {
 	return &BudgetPeriodRepository{conn: c}
 }
 
+func (B *BudgetPeriodRepository) AddItem(item *BudgetPeriod) {
+	B.conn.Create(item)
+}
+
 func (B *BudgetPeriodRepository) Items(items []BudgetPeriod) []BudgetPeriod {
 	B.conn.Find(&items)
 	return items

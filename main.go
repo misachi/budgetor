@@ -1,40 +1,35 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	_ "reflect"
+	"log"
+	"net/http"
 
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
 
+	"budgetor/api"
 	"budgetor/budgets"
+	"budgetor/expenses"
 	"budgetor/users"
 	"budgetor/utils"
-	_ "budgetor/utils"
 )
 
-func main() {
-	db, err := gorm.Open("sqlite3", "test.db")
-	if err != nil {
-		fmt.Println(err)
-		panic("failed to connect database")
+// Container for all project apps
+var app = []utils.Entity{
+	&users.User{},
+	&expenses.Expense{},
+	&expenses.ExpenseLine{},
+	&budgets.Budget{},
+	&budgets.BudgetPeriod{},
+}
+
+// Make migrations for all project apps
+func migrate(db *gorm.DB) {
+	for _, elem := range app {
+		elem.DBMigrate(db)
 	}
-	defer db.Close()
+}
 
-	db.AutoMigrate(&users.User{})
-	db.AutoMigrate(&budgets.BudgetPeriod{})
-
-	uRepo := users.NewUserRepository(db)
-	user := users.User{Name: "Carlos Misachi"}
-	user.ID = 99
-
-	bp := budgets.BudgetPeriod{Periodtype: utils.Daily}
-
-	uRepo.AddBudgetPeriod(&user, &bp)
-
-	objs, _ := uRepo.GetUser(user)
-
-	val, err := json.MarshalIndent(objs, "", " ")
-	fmt.Println(string(val))
+func main() {
+	migrate(utils.Conn)
+	log.Fatal(http.ListenAndServe(":8080", api.Handlers()))
 }
